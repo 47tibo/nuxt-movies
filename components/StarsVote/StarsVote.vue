@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="dummy-prop">{{ dummyPropToString }}</div>
+  <b-rate v-model="vote" :show-score="score" :disabled="true"> </b-rate>
 </template>
 
 <script lang="ts">
@@ -7,16 +7,17 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
-    dummyProp: {
-      type: Boolean,
+    voteAverage: {
+      type: Number,
       required: true,
-      validator: (dummyProp: boolean) => typeof dummyProp === 'boolean',
+      validator: (voteAverage: number) => voteAverage >= 0 && voteAverage <= 10,
     },
   },
-  computed: {
-    dummyPropToString(): string {
-      return this.dummyProp === true ? 'hello' : 'bye'
-    },
+  data() {
+    return {
+      vote: ((this.voteAverage * 5) / 10) as number,
+      score: true,
+    }
   },
 })
 </script>
