@@ -11,5 +11,8 @@ module.exports = {
   ],
   plugins: [],
   // add your custom rules here
-  rules: {},
+  rules: {
+    camelcase: ['error', { properties: 'nonmethods' }],
+    '@typescript-eslint/camelcase': ['error', { properties: 'nonmethods' }],
+  },
 }
