@@ -12,7 +12,7 @@
     <div class="content">
       <h1 class="title is-4">{{cardProps.title}}</h1>
       <br />
-      <p>{{cardProps.overview}}</p>
+      <p class="overview">{{cardProps.overview}}</p>
       <time data-testid="releaseDate">{{cardProps.release_date}}</time>
       <StarsVote :vote-average="cardProps.vote_average"></StarsVote>
       <a :href="cardProps.imdb_url" target="_blank" rel="noreferrer">
@@ -22,6 +22,12 @@
     </div>
   </article>
 </template>
+<style scoped>
+  .overview {
+    height: 6rem;
+    overflow: hidden;
+  }
+</style>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
