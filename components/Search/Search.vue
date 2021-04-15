@@ -5,8 +5,8 @@
           class="input is-rounded"
           type="text"
           placeholder="exemple 'Speed'"
-          ref="textInput"
           data-testid="search-input"
+          v-model="localSearch"
         />
       </div>
       <div class="control">
@@ -23,13 +23,18 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 export default defineComponent({
+    props: ['search'],
+    data() {
+      return {
+        localSearch: this.search
+      }
+    },
     emits: ['submit'],
     methods: {
         onSubmit() {
-            const textInput = this.$refs.textInput as HTMLInputElement;
-            const search = textInput.value.trim()
-            if (search) {
-                this.$emit('submit', search)
+            const localSearch = this.localSearch.trim()
+            if (localSearch) {
+                this.$emit('submit', localSearch)
             }
         }
     }

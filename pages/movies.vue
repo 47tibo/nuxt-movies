@@ -1,11 +1,23 @@
 <template>
     <main class="container">
+        <div class="centered my my-6">
+        <nav class="level">
+          <div class="level-left">
+            <Search @submit="onSearch" :search="initialSearch" />
+          </div>
+          <div class="level-right">
+            <NuxtLink to="/">Retour à l'accueil</NuxtLink>
+          </div>
+        </nav>
+      </div>
+      <div className="centered is-flex is-flex-wrap-wrap">
         <ul v-if="movies.length" class="is-flex is-flex-wrap-wrap">
             <li v-for="movie in movies" :key="movie.id" class="movie">
                 <Card :card-props="movie"></Card>
             </li>
         </ul>
         <p v-else>:( pas de résultat pour cette recherche</p>
+    </div>
     </main>
 </template>
 <style scoped>
@@ -56,7 +68,7 @@ const getAllImdbUrls = async (movieIds: number[]) =>
   Promise.all(movieIds.map((movieId) => getImdbUrl(movieId)))
 
 export default defineComponent({
-    async asyncData({ $axios, query }): Promise<{movies: CardProps[]}> {
+    async asyncData({ $axios, query }): Promise<{movies: CardProps[], initialSearch: string}> {
         const movies = await $axios.$get('/search/movie', {
             params: {
                 api_key: 'ea19850e51eedeaee6ecc4618ffbda6a',
@@ -75,7 +87,14 @@ export default defineComponent({
             poster_url: `https://image.tmdb.org/t/p/w780/${movie.poster_path}`,
             imdb_url: imdbUrls[index],
         }))
-        return {movies: moviesWithImdbUrls}
-    }
+        const initialSearch = query.search as string
+        return {movies: moviesWithImdbUrls, initialSearch}
+    },
+    watchQuery: true,
+    methods: {
+        onSearch(newSearch: string) {
+          this.$router.push({name: 'movies', query: {search: newSearch}})
+        }
+  }
 })
 </script>
