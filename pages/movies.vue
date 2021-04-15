@@ -93,8 +93,7 @@ export default defineComponent({
     watchQuery: true,
     methods: {
         onSearch(newSearch: string) {
-          this.$store.commit('search/setSearch', newSearch)
-          this.$router.push({name: 'movies', query: {search: newSearch}})
+          this.$store.dispatch('search/setSearch', newSearch)
         }
   }
 })

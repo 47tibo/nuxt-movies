@@ -1,4 +1,4 @@
-import { GetterTree, MutationTree } from 'vuex'
+import { GetterTree, MutationTree, ActionTree } from 'vuex'
 
 export const state = () => ({
     query: ''
@@ -15,3 +15,10 @@ export const mutations: MutationTree<RootState> = {
         state.query = newSearch
     }
 }
+
+export const actions: ActionTree<RootState, RootState> = {
+    setSearch({ commit }, payload) {
+        commit('setSearch', payload)
+        this.$router.push({name: 'movies', query: {search: payload}})
+    },
+}    

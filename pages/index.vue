@@ -12,8 +12,7 @@ export default defineComponent({
   },
   methods: {
     onSearch(query: string) {
-      this.$store.commit('search/setSearch', query)
-      this.$router.push({name: 'movies', query: {search: query}})
+      this.$store.dispatch('search/setSearch', query)
     },
   }
 })
